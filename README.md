@@ -1,6 +1,5 @@
 # 🛒 ZENVIA | Next-Gen E-Commerce Platform
 
-![Zenvia Banner](https://via.placeholder.com/1200x400?text=ZENVIA+Global+Inventory) 
 > **Zenvia** is a high-performance, frontend-focused e-commerce application built with the **Titanium Edition v11.7 JavaScript Engine**. It features a serverless architecture, simulating full-stack functionality using LocalStorage, external APIs, and EmailJS.
 
 ---
