@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZENVIA | Global Inventory</title>
+    <link rel="shortcut icon" href="zenvia.png" type="image/x-icon">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="sticky-nav">
+        <div class="logo"><a href="index.html">ZENVIA</a></div>
+        <div class="search-wrapper">
+            <input type="text" class="search-input" placeholder="Search products..."
+                onkeyup="InteractionEngine.handleSearch(this.value)">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+        <div class="nav-links">
+            <a href="profile.html" class="desktop-link">Orders</a>
+            <a href="seller.html" class="desktop-link">Seller</a>
+            <a href="support.html" class="desktop-link">Support</a>
+
+            <button id="theme-toggle" onclick="InteractionEngine.toggleTheme()" class="theme-icon"><i
+                    class="fa-solid fa-moon"></i></button>
+            <div class="btn-login" onclick="UI.openAuthModal()">
+                <i class="fa-regular fa-user"></i> <span id="auth-btn-text">Login</span>
+            </div>
+            <a href="cart.html" class="cart-wrap">BAG <span id="cart-count" class="cart-count">0</span></a>
+        </div>
+        <i class="fa-solid fa-bars" id="mobile-menu-btn" onclick="InteractionEngine.toggleMenu()"></i>
+    </nav>
+
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div
+            style="display:flex; justify-content:space-between; align-items:center; padding-bottom:20px; border-bottom:1px solid var(--border);">
+            <span style="font-weight:900; font-size:18px;">MENU</span>
+            <i class="fa-solid fa-xmark" onclick="InteractionEngine.toggleMenu()"
+                style="font-size:24px; cursor:pointer;"></i>
+        </div>
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="profile.html" class="mobile-link">My Profile / Orders</a>
+        <a href="cart.html" class="mobile-link">My Bag</a>
+        <a href="seller.html" class="mobile-link">Become Seller</a>
+        <a href="support.html" class="mobile-link">Support</a>
+        <a href="#" id="mobile-auth-btn" class="mobile-link" style="color:var(--primary); font-weight:700;">Login / Sign
+            Up</a>
+        <div class="mobile-link" onclick="InteractionEngine.toggleTheme()"
+            style="display:flex; justify-content:space-between; cursor:pointer; margin-top:10px;">
+            <span>Dark Mode</span>
+            <div id="mobile-theme-icon" class="theme-icon"><i class="fa-solid fa-moon"></i></div>
+        </div>
+    </div>
+
+    <div id="home-layout">
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <div class="carousel-slide active"
+                    style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=2070&auto=format&fit=crop');">
+                    <div class="slide-content">
+                        <h2>Winter Collection</h2>
+                        <p>Up to 50% Off on Premium Jackets</p>
+                        <button class="btn-primary"
+                            onclick="document.getElementById('category-board').scrollIntoView({behavior:'smooth'})">Shop
+                            Winter</button>
+                    </div>
+                </div>
+                <div class="carousel-slide"
+                    style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1498049384371-858142054944?q=80&w=2069&auto=format&fit=crop');">
+                    <div class="slide-content">
+                        <h2>Tech Revolution</h2>
+                        <p>New Gadgets Just Dropped</p>
+                        <button class="btn-primary"
+                            onclick="document.getElementById('category-board').scrollIntoView({behavior:'smooth'})">Explore
+                            Tech</button>
+                    </div>
+                </div>
+                <div class="carousel-slide"
+                    style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop');">
+                    <div class="slide-content">
+                        <h2>Luxury Jewelery</h2>
+                        <p>Gold & Silver Essentials</p>
+                        <button class="btn-primary"
+                            onclick="document.getElementById('category-board').scrollIntoView({behavior:'smooth'})">View
+                            Collection</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-btn prev" onclick="InteractionEngine.prevSlide()">&#10094;</button>
+            <button class="carousel-btn next" onclick="InteractionEngine.nextSlide()">&#10095;</button>
+
+            <div class="carousel-dots">
+                <span class="dot active" onclick="InteractionEngine.goToSlide(0)"></span>
+                <span class="dot" onclick="InteractionEngine.goToSlide(1)"></span>
+                <span class="dot" onclick="InteractionEngine.goToSlide(2)"></span>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="category-board" id="category-board"></div>
+        </div>
+    </div>
+
+    <div id="listing-layout" style="display:none; padding-top:40px;">
+        <div class="container">
+            <div class="toolbar">
+                <div>
+                    <a href="index.html" style="font-size:12px; font-weight:700;">&larr; BACK TO HOME</a>
+                    <h2 id="list-title" style="font-size:24px; margin-top:10px; text-transform:uppercase;">Products</h2>
+                </div>
+                <select class="sort-select" onchange="InteractionEngine.sortProducts(this.value)">
+                    <option value="default">Sort By: Featured</option>
+                    <option value="low-high">Price: Low to High</option>
+                    <option value="high-low">Price: High to Low</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+            <div class="product-grid" id="product-list"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="zenvia.html?page=about">About Us</a></li>
+                    <li><a href="zenvia.html?page=careers">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="support.html">Contact Us</a></li>
+                    <li><a href="zenvia.html?page=shipping">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="zenvia.html?page=privacy">Privacy Policy</a></li>
+                    <li><a href="zenvia.html?page=terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="seller.html">Become a Seller</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-settings">
+            <div class="footer-logo-box">
+                <a href="index.html">ZENVIA</a>
+            </div>
+
+            <div class="settings-controls">
+                <button class="setting-btn" id="current-lang-text"
+                    onclick="InteractionEngine.openSettingsModal('lang')">
+                    <i class="fa-solid fa-globe"></i> English <i class="fa-solid fa-sort"
+                        style="font-size:10px; margin-left:5px; opacity:0.6;"></i>
+                </button>
+
+                <button class="setting-btn" id="current-region-text"
+                    onclick="InteractionEngine.openSettingsModal('region')">
+                    <img src="https://flagcdn.com/w20/in.png" alt="India"
+                        style="width:18px; height:auto; border:1px solid #555;"> India
+                </button>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; 2026 Zenvia Inc. All rights reserved.
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toast-container"></div>
+    <div id="auth-modal"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
