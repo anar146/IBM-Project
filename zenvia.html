@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Center | Zenvia</title>
+    <link rel="shortcut icon" href="zenvia.png" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            /* Kept the design you liked, just tweaking the accent slightly to be unique */
+            --accent-color: #ff9900;
+            --card-bg: #ffffff;
+            --text-main: #333;
+        }
+
+        [data-theme="dark"] {
+            --card-bg: #2a2a2a;
+            --text-main: #eee;
+        }
+
+        body {
+            background-color: var(--secondary);
+        }
+
+        .info-wrapper {
+            min-height: 80vh;
+            padding-bottom: 60px;
+        }
+
+        /* SECTIONS UTILITY */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 1. ABOUT US & TEAM */
+        .hero-banner {
+            /* Changed image to a different tech vibe */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop');
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-content h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-section {
+            max-width: 1000px;
+            margin: 60px auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .team-photo-frame {
+            margin-top: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 5px solid white;
+        }
+
+        .team-photo-frame img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .team-photo-frame:hover img {
+            transform: scale(1.03);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .value-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .value-icon {
+            font-size: 30px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* 2. CAREERS */
+        .career-header {
+            background-color: #111;
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .career-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 30px auto 0;
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-input-career {
+            flex: 1;
+            border: none;
+            padding: 15px;
+            font-size: 15px;
+            outline: none;
+            border-radius: 4px;
+        }
+
+        .search-btn-career {
+            background-color: var(--accent-color);
+            border: none;
+            padding: 0 40px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .job-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .job-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .job-btn {
+            background: var(--text-main);
+            color: var(--card-bg);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 20px;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .job-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* JOB MODAL SPECIFIC */
+        .job-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .job-modal {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 12px;
+            position: relative;
+            text-align: left;
+            color: var(--text-main);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .close-job {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .apply-btn {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            border-radius: 6px;
+            font-weight: bold;
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        /* 3. SHIPPING TIMELINE */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--border);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .t-container {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .t-container::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            right: -8px;
+            background: white;
+            border: 4px solid var(--primary);
+            top: 20px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+            text-align: right;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -8px;
+        }
+
+        .t-content {
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .t-content:hover {
+            transform: scale(1.02);
+        }
+
+        /* 4. LEGAL */
+        .legal-wrapper {
+            display: flex;
+            max-width: 1000px;
+            margin: 40px auto;
+            gap: 40px;
+            padding: 20px;
+        }
+
+        .legal-sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .legal-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            color: #777;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .legal-item:hover {
+            background: var(--secondary);
+            color: var(--text-main);
+        }
+
+        .legal-item.active {
+            border-left-color: var(--primary);
+            color: var(--primary);
+            font-weight: 700;
+            background: var(--secondary);
+        }
+
+        .legal-content {
+            flex: 1;
+            color: var(--text-main);
+            line-height: 1.8;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        @media(max-width:768px) {
+            .timeline::after {
+                left: 20px;
+            }
+
+            .t-container {
+                width: 100%;
+                padding-left: 50px;
+                padding-right: 0;
+                text-align: left;
+            }
+
+            .t-container::after {
+                left: 10px;
+            }
+
+            .right {
+                left: 0;
+            }
+
+            .legal-wrapper {
+                flex-direction: column;
+            }
+
+            .legal-sidebar {
+                width: 100%;
+                border-bottom: 1px solid var(--border);
+                margin-bottom: 20px;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .search-btn-career {
+                width: 100%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="sticky-nav">
+        <div class="logo"><a href="index.html">ZENVIA</a></div>
+        <div class="nav-links">
+            <a href="index.html" class="desktop-link">Home</a>
+            <a href="support.html" class="desktop-link">Support</a>
+            <button id="theme-toggle" onclick="InteractionEngine.toggleTheme()" class="theme-icon"><i
+                    class="fa-solid fa-moon"></i></button>
+            <div class="btn-login" onclick="UI.openAuthModal()">
+                <i class="fa-regular fa-user"></i> <span id="auth-btn-text">Login</span>
+            </div>
+            <a href="cart.html" class="cart-wrap">BAG <span id="cart-count" class="cart-count">0</span></a>
+        </div>
+        <i class="fa-solid fa-bars" id="mobile-menu-btn" onclick="InteractionEngine.toggleMenu()"></i>
+    </nav>
+
+    <div class="info-wrapper">
+
+        <div id="section-about" class="page-section">
+            <div class="hero-banner">
+                <div class="hero-content">
+                    <h1>We Are Zenvia.</h1>
+                    <p>Redefining global commerce through innovation.</p>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="team-section">
+                    <h2 style="font-weight:900; font-size:32px; text-transform: uppercase;">Meet The Team</h2>
+                    <p style="color:#666; max-width:600px; margin: 10px auto 30px;">The engineers and dreamers building
+                        the next generation of shopping.</p>
+                    <div class="team-photo-frame">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop"
+                            alt="Team Photo">
+                    </div>
+                </div>
+
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fa-solid fa-users"></i></div>
+                        <h3>Customer Obsession</h3>
+                        <p style="font-size:13px; color:#666;">We don't just satisfy customers, we delight them.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                        <h3>Radical Innovation</h3>
+                        <p style="font-size:13px; color:#666;">We challenge the status quo every single day.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon"><i class="fa-solid fa-rocket"></i></div>
+                        <h3>Global Impact</h3>
+                        <p style="font-size:13px; color:#666;">Connecting local sellers to a worldwide audience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-careers" class="page-section">
+            <div class="career-header">
+                <h1>Build The Extraordinary</h1>
+                <p style="color:#ccc;">Join the team that is changing how the world shops.</p>
+                <div class="search-container">
+                    <input type="text" class="search-input-career" placeholder="Role (e.g. Developer, Designer)">
+                    <input type="text" class="search-input-career" placeholder="Location (e.g. Remote, London)">
+                    <button class="search-btn-career">Search</button>
+                </div>
+            </div>
+
+            <div class="job-grid">
+                <div class="job-card">
+                    <i class="fa-solid fa-laptop-code" style="font-size:24px; margin-bottom:10px;"></i>
+                    <h3>Engineering & Tech</h3>
+                    <p style="font-size:14px; color:#666; margin:10px 0;">Backend, Frontend, and AI roles pushing the
+                        boundaries of what's possible.</p>
+                    <button class="job-btn" onclick="openJobModal('tech')">View Openings</button>
+                </div>
+                <div class="job-card">
+                    <i class="fa-solid fa-chart-line" style="font-size:24px; margin-bottom:10px;"></i>
+                    <h3>Growth & Marketing</h3>
+                    <p style="font-size:14px; color:#666; margin:10px 0;">Help us tell our story and reach millions of
+                        new customers worldwide.</p>
+                    <button class="job-btn" onclick="openJobModal('growth')">Join Marketing</button>
+                </div>
+                <div class="job-card">
+                    <i class="fa-solid fa-graduation-cap" style="font-size:24px; margin-bottom:10px;"></i>
+                    <h3>Internships</h3>
+                    <p style="font-size:14px; color:#666; margin:10px 0;">Start your career with mentorship from
+                        industry leaders.</p>
+                    <button class="job-btn" onclick="openJobModal('student')">Apply Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-shipping" class="page-section">
+            <div style="text-align:center; padding:40px;">
+                <h1>Delivery Roadmap</h1>
+                <p style="color:#666;">Our transparent process from click to door.</p>
+            </div>
+            <div class="timeline">
+                <div class="t-container left">
+                    <div class="t-content">
+                        <h3>1. Order Placed</h3>
+                        <p>Instant verification. Order details sent to warehouse.</p>
+                    </div>
+                </div>
+                <div class="t-container right">
+                    <div class="t-content">
+                        <h3>2. Quality Check</h3>
+                        <p>Every item is inspected before packing.</p>
+                    </div>
+                </div>
+                <div class="t-container left">
+                    <div class="t-content">
+                        <h3>3. Dispatch</h3>
+                        <p>Handed to our premium logistics partners.</p>
+                    </div>
+                </div>
+                <div class="t-container right">
+                    <div class="t-content">
+                        <h3>4. Arrival</h3>
+                        <p>Delivered safely to your location.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="section-legal" class="page-section">
+            <div class="legal-wrapper">
+                <div class="legal-sidebar">
+                    <div class="legal-item active" onclick="switchLegal('privacy', this)">Privacy Policy</div>
+                    <div class="legal-item" onclick="switchLegal('terms', this)">Terms of Service</div>
+                </div>
+                <div class="legal-content" id="legal-text">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="job-modal-overlay" class="job-modal-overlay">
+        <div class="job-modal">
+            <i class="fa-solid fa-xmark close-job" onclick="closeJobModal()"></i>
+            <h2 id="modal-role-title" style="margin-bottom:10px;"></h2>
+            <span style="background:#eee; padding:4px 8px; border-radius:4px; font-size:12px; font-weight:600;">FULL
+                TIME</span>
+            <p id="modal-role-desc" style="color:#555; margin:20px 0; line-height:1.6;"></p>
+
+            <div style="background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:20px;">
+                <h4 style="margin-bottom:10px;">Requirements:</h4>
+                <ul style="padding-left:20px; font-size:14px; color:#666;">
+                    <li>Relevant experience in the field</li>
+                    <li>Passion for e-commerce innovation</li>
+                    <li>Strong problem-solving skills</li>
+                </ul>
+            </div>
+
+            <a href="#" id="modal-mail-btn" class="apply-btn">
+                <i class="fa-solid fa-paper-plane"></i> Send Application via Email
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="zenvia.html?page=about">About Us</a></li>
+                    <li><a href="zenvia.html?page=careers">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="support.html">Contact Us</a></li>
+                    <li><a href="zenvia.html?page=shipping">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="zenvia.html?page=privacy">Privacy Policy</a></li>
+                    <li><a href="zenvia.html?page=terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="seller.html">Become a Seller</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-settings">
+            <div class="footer-logo-box"><a href="index.html">ZENVIA</a></div>
+            <div class="settings-controls">
+                <button class="setting-btn" onclick="InteractionEngine.openSettingsModal('lang')"><i
+                        class="fa-solid fa-globe"></i> English</button>
+                <button class="setting-btn" onclick="InteractionEngine.openSettingsModal('region')"><img
+                        src="https://flagcdn.com/w20/in.png" style="width:16px;"> India</button>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Zenvia Inc. All rights reserved.</div>
+    </footer>
+
+    <div class="toast-container" id="toast-container"></div>
+    <div id="auth-modal"></div>
+    <script src="script.js"></script>
+
+    <script>
+        // --- 1. ROUTING LOGIC ---
+        window.onload = function () {
+            if (Router && Router.init) Router.init();
+            const params = new URLSearchParams(window.location.search);
+            const page = params.get('page') || 'about';
+
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+
+            if (['privacy', 'terms'].includes(page)) {
+                document.getElementById('section-legal').classList.add('active');
+                switchLegal(page, document.querySelector(`.legal-item[onclick*="${page}"]`));
+            } else if (document.getElementById(`section-${page}`)) {
+                document.getElementById(`section-${page}`).classList.add('active');
+            } else {
+                document.getElementById('section-about').classList.add('active');
+            }
+        };
+
+        // --- 2. JOB MODAL LOGIC ---
+        const jobs = {
+            'student': { title: "Student Internship Program", desc: "Join our dynamic internship program designed to give you real-world experience. You will work alongside senior developers and contribute to live projects that impact millions of users." },
+            'tech': { title: "Senior Software Engineer", desc: "We are seeking experienced engineers proficient in React, Node.js, and Cloud Architecture. You will be responsible for scaling our platform and implementing new features." },
+            'growth': { title: "Growth Marketing Manager", desc: "Lead our user acquisition strategies. You will analyze data, run campaigns, and optimize our conversion funnels to grow the Zenvia community." }
+        };
+
+        function openJobModal(type) {
+            const data = jobs[type];
+            document.getElementById('modal-role-title').innerText = data.title;
+            document.getElementById('modal-role-desc').innerText = data.desc;
+
+            const subject = `Application: ${data.title}`;
+            const body = `Hi Zenvia Talent Team,%0D%0A%0D%0AI am writing to apply for the ${data.title} position. Please find my attached resume/portfolio.%0D%0A%0D%0AKey Skills:%0D%0A-%0D%0A-%0D%0A%0D%0ARegards,`;
+            document.getElementById('modal-mail-btn').href = `mailto:careers@zenvia.com?subject=${subject}&body=${body}`;
+
+            document.getElementById('job-modal-overlay').style.display = 'flex';
+        }
+
+        function closeJobModal() {
+            document.getElementById('job-modal-overlay').style.display = 'none';
+        }
+
+        // --- 3. LEGAL TAB LOGIC ---
+        function switchLegal(tab, btn) {
+            const texts = {
+                'privacy': `<h1>Privacy Policy</h1><p><strong>Effective Date: Jan 2026</strong></p><p>At Zenvia, we prioritize your data privacy. We only collect essential information required to process your orders and improve your shopping experience.</p><h3>Data We Collect</h3><p>We collect your name, address, and contact details for shipping purposes. Payment data is processed securely by third-party providers and is never stored on our servers.</p>`,
+                'terms': `<h1>Terms of Service</h1><p><strong>Effective Date: Jan 2026</strong></p><p>By accessing Zenvia, you agree to comply with these terms. All products are sold 'as is'. Returns must be initiated within 30 days of receipt.</p><h3>User Conduct</h3><p>You agree not to use our services for any illegal or unauthorized purpose.</p>`
+            };
+            document.getElementById('legal-text').innerHTML = texts[tab];
+            document.querySelectorAll('.legal-item').forEach(el => el.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

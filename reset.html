@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password | Zenvia</title>
+    <link rel="shortcut icon" href="zenvia.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Simple centered layout for Reset Page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--secondary);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .reset-card {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .reset-card h2 {
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .reset-card p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="reset-card">
+        <div style="margin-bottom: 20px;">
+            <a href="index.html" style="font-weight:900; font-size:24px; color:#333; text-decoration:none;">ZENVIA</a>
+        </div>
+        <h2>Reset Password</h2>
+        <p>Enter a new secure password for your account.</p>
+
+        <form onsubmit="handleReset(event)">
+            <div class="form-group" style="text-align: left;">
+                <label>New Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="new-pass" class="form-input" required minlength="6"
+                        placeholder="Min 6 chars">
+                    <i class="fa-regular fa-eye password-toggle" onclick="togglePass()"></i>
+                </div>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;">UPDATE PASSWORD</button>
+        </form>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        // 1. Toggle Password Visibility
+        function togglePass() {
+            const el = document.getElementById('new-pass');
+            el.type = el.type === 'password' ? 'text' : 'password';
+        }
+
+        // 2. Show Toast Notification
+        function showToast(msg, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${msg}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // 3. Handle Form Submit
+        function handleReset(e) {
+            e.preventDefault();
+
+            // Get Email from URL (e.g., reset.html?email=user@example.com)
+            const params = new URLSearchParams(window.location.search);
+            const email = params.get('email');
+            const newPass = document.getElementById('new-pass').value;
+
+            if (!email) {
+                showToast("Invalid Reset Link. Please try again.", "error");
+                return;
+            }
+
+            // Update LocalStorage
+            let users = JSON.parse(localStorage.getItem('zenviaUsers_v1')) || [];
+            const userIndex = users.findIndex(u => u.email === email);
+
+            if (userIndex !== -1) {
+                users[userIndex].pass = newPass; // Update password
+                localStorage.setItem('zenviaUsers_v1', JSON.stringify(users)); // Save back to storage
+
+                showToast("Password Reset Successful! 🚀", "success");
+
+                // Redirect to Login (Home)
+                setTimeout(() => window.location.href = 'index.html', 2000);
+            } else {
+                showToast("User not found. Please Sign Up.", "error");
+            }
+        }
+    </script>
+</body>
+
+</html>
