@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support | Zenvia</title>
+    <link rel="shortcut icon" href="zenvia.png" type="image/x-icon">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="sticky-nav">
+        <div class="logo"><a href="index.html">ZENVIA</a></div>
+        <div class="nav-links">
+            <a href="profile.html" class="desktop-link">Orders</a>
+            <a href="seller.html" class="desktop-link">Seller</a>
+            <a href="support.html" class="desktop-link">Support</a>
+            <button id="theme-toggle" onclick="InteractionEngine.toggleTheme()" class="theme-icon"><i
+                    class="fa-solid fa-moon"></i></button>
+            <div class="btn-login" onclick="UI.openAuthModal()">
+                <i class="fa-regular fa-user"></i> <span id="auth-btn-text">Login</span>
+            </div>
+            <a href="cart.html" class="cart-wrap">BAG <span id="cart-count" class="cart-count">0</span></a>
+        </div>
+        <i class="fa-solid fa-bars" id="mobile-menu-btn" onclick="InteractionEngine.toggleMenu()"></i>
+    </nav>
+
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div
+            style="display:flex; justify-content:space-between; align-items:center; padding-bottom:20px; border-bottom:1px solid var(--border);">
+            <span style="font-weight:900; font-size:18px;">MENU</span>
+            <i class="fa-solid fa-xmark" onclick="InteractionEngine.toggleMenu()"
+                style="font-size:24px; cursor:pointer;"></i>
+        </div>
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="profile.html" class="mobile-link">My Profile / Orders</a>
+        <a href="cart.html" class="mobile-link">My Bag</a>
+        <a href="seller.html" class="mobile-link">Become Seller</a>
+        <a href="support.html" class="mobile-link">Support</a>
+        <a href="#" id="mobile-auth-btn" class="mobile-link" style="color:var(--primary); font-weight:700;">Login / Sign
+            Up</a>
+        <div class="mobile-link" onclick="InteractionEngine.toggleTheme()"
+            style="display:flex; justify-content:space-between; cursor:pointer; margin-top:10px;">
+            <span>Dark Mode</span>
+            <div id="mobile-theme-icon" class="theme-icon"><i class="fa-solid fa-moon"></i></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="page-form-container">
+            <h1 style="text-align:center; margin-bottom:40px;">Contact Support</h1>
+            <form onsubmit="event.preventDefault(); UI.showToast('Message Sent! 📨', 'success');">
+                <div class="form-group"><label>Order ID (Optional)</label><input type="text" class="form-input"></div>
+                <div class="form-group"><label>Issue Type</label><input type="text" class="form-input"
+                        placeholder="Shipping, Refund, etc."></div>
+                <div class="form-group"><label>Message</label><textarea class="form-input"
+                        style="height:100px;"></textarea></div>
+                <button class="btn-primary" style="width:100%;">SEND MESSAGE</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+    <div id="auth-modal"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
